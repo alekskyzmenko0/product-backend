@@ -48,9 +48,10 @@ const upload = multer({ storage });
 
 // POST /products/upload — загрузка изображения
 router.post("/upload", upload.single("image"), (req, res) => {
-  const imageUrl = `http://localhost:3000/uploads/${req.file.filename}`;
+  const imageUrl = `${BASE_URL}/uploads/${req.file.filename}`; // <<< исправлено
   res.json({ imageUrl });
 });
+
 
 
 module.exports = router;
