@@ -82,4 +82,24 @@ router.post("/upload-model", upload.single("model"), (req, res) => {
   res.json({ modelUrl });
 });
 
+// UPDATE product (изменение modelUrl или любого поля)
+router.patch("/:id", async (req, res) => {
+  try {
+    const updated = await Product.findByIdAndUpdate(
+      req.params.id,
+      req.body,              // передаём любые поля для обновления
+      { new: true }          // вернуть обновлённый объект
+    );
+
+    if (!updated) {
+      return res.status(404).json({ error: "Product not found" });
+    }
+
+    res.json(updated);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+
 module.exports = router;
